@@ -1,0 +1,20 @@
+{%extends 'app/base.html'%}
+{%block content%}
+<h1>Post</h1>
+
+{% for post in object_list %}
+
+<ul>
+<li><a href="{% url 'ac' post.pk %}">{{post.title}}</a>
+	<a href="{% url 'category' post.category|slugify %}"> {{post.category}}</a>
+
+
+{{post.author.first_name}}
+{{post.author.last_name}}
+{{post.body|slice:":200"}}
+
+</br>
+</ul>
+{%endfor%}
+
+{%endblock%}

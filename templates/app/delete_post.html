@@ -1,0 +1,27 @@
+{%extends 'app/base.html'%}
+{%block content%}
+
+
+{% if user.id == post.author.id %}
+<h1>Delete post....</h1></br>
+
+<h3>delete{{post.title}}</h3>
+
+
+<div class="form-group">
+<form method="POST" >
+	{%csrf_token%}
+	{{form.as_p}}
+</br>
+	<strong>are you sure</strong>
+	<button class="btn btn-primary">Delete post!</button>
+
+</form>
+</div>
+{%else%}
+
+
+you are not Authorized to delete it bro!!!!
+{%endif%}
+
+{%endblock%}

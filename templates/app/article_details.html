@@ -1,0 +1,50 @@
+{%extends 'app/base.html'%}
+{%block title%}this is {{post.title_tag}}{%endblock%}
+
+
+
+{% block content %}
+<h1>{{post.title}}</h1>
+<small> by: {{post.author}}<br/>
+	{{post.title_tag}}</br> creation date--{{post.post_date}}
+</small></br>
+
+</hr>
+{{ post.body|safe }}
+{% if post.header_image %}
+<img src="{{post.header_image.url}}
+" style="max-width: 300px;">
+{%endif%}
+
+{%if post.author == request.user and  user.is_authenticated %}
+
+{% if user.id == post.author.id %}
+        <div class=" containerbutton center">
+            <a href="{%url 'update_post' post.pk%}" class="btn text-white  btn-primary btn-link">UPDATE</a>
+            <a href="{%url 'delete_post' post.pk %}" class="btn text-white  btn-primary btn-link">DELETE</a>
+        </div>
+        {%endif%}
+        {% endif %}
+</br>
+<a href="{% url 'home' %}" class="btn btn-primary"> back</a>
+
+
+<br/>
+<hr/>
+<form action="{% url 'like_post' post.pk %}" method="POST">
+	{%csrf_token%}
+	{% if liked %}
+		<button type="submit" name="post_id" value="{{post.id}}" class="btn-btn-danger">unLike</button>
+		{%else%}
+	<button type="submit" name="post_id" value="{{post.id}}" class="btn-btn-primary">Like</button> -
+{%endif%}
+	 {{ total_likes }} likes
+
+
+
+{{user.userprofile.bio}}
+
+
+</form>
+
+{%endblock%}
